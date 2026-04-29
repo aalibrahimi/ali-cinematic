@@ -3,6 +3,7 @@
 import { motion, useScroll, useTransform } from "motion/react";
 import { useRef } from "react";
 import { BrandMark } from "@/components/ui/BrandMark";
+import { Hero3DLoader } from "@/components/ui/Hero3DLoader";
 import { APPLE_EASE, HERO_SEQUENCE } from "@/lib/motion";
 
 /**
@@ -51,7 +52,7 @@ function Letter({
       transition={{ duration: 1.1, delay, ease: APPLE_EASE }}
       className={`inline-block ${italic ? "italic" : ""}`}
     >
-      {char === " " ? " " : char}
+      {char === " " ? " " : char}
     </motion.span>
   );
 }
@@ -76,9 +77,15 @@ export function Hero() {
       ref={ref}
       className="relative min-h-[100svh] flex flex-col items-center justify-center overflow-hidden"
     >
-      {/* Ambient gradient — slow infinite rotation. Z-0, behind
-          everything. The gradient itself is the only "color" on the
-          black canvas; everything else is in grayscale. */}
+      {/* 3D centerpiece — Spline scene, scoped to the hero section
+          only. Lives behind everything via z-0; foreground content
+          uses z-10 to sit on top. Renders client-only via the
+          dynamic loader (Spline needs window). */}
+      <Hero3DLoader />
+
+      {/* Ambient gradient — slow infinite rotation. The gradient
+          itself is the only "color" on the black canvas; everything
+          else is in grayscale. */}
       <motion.div
         aria-hidden
         style={{ y: gradientY }}
