@@ -1,6 +1,8 @@
 import type { Metadata, Viewport } from "next";
 import { Geist, Geist_Mono } from "next/font/google";
 import { LenisProvider } from "@/components/ui/LenisProvider";
+import { Nav } from "@/components/Nav";
+import { Footer } from "@/components/Footer";
 import "./globals.css";
 
 // Geist Sans — Vercel's typeface, the closest free analogue to Apple
@@ -67,7 +69,11 @@ export default function RootLayout({
       className={`${display.variable} ${sans.variable} ${mono.variable}`}
     >
       <body>
-        <LenisProvider>{children}</LenisProvider>
+        <LenisProvider>
+          <Nav />
+          {children}
+          <Footer />
+        </LenisProvider>
       </body>
     </html>
   );
