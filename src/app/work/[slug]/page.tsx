@@ -3,23 +3,16 @@ import { notFound } from "next/navigation";
 import Link from "next/link";
 import { WORK } from "@/lib/work";
 import { WorkRow } from "@/components/sections/WorkRow";
-import {
-  CaseHero,
-  StatsGrid,
-  NarrativeBlock,
-  StackAndCTA,
-} from "./_parts";
+import { SplitScreenVariant } from "./_variants/split-screen";
 
 interface Params {
   params: Promise<{ slug: string }>;
 }
 
-/** Pre-render every case study at build time. */
 export async function generateStaticParams() {
   return WORK.map((w) => ({ slug: w.slug }));
 }
 
-/** Per-project meta titles + descriptions. */
 export async function generateMetadata({
   params,
 }: Params): Promise<Metadata> {
@@ -33,24 +26,21 @@ export async function generateMetadata({
 }
 
 /**
- * /work/[slug] — case study, Apple product-page treatment.
+ * /work/[slug] — case study.
  *
- * Top-to-bottom anatomy:
- *   1. CaseHero       — back link · eyebrow · big name with accent
- *                       period · pull quote
- *   2. StatsGrid      — 4 cells with count-up animation on view
- *   3. NarrativeBlocks — scroll-revealed prose blocks with optional
- *                       bulleted highlights
- *   4. StackAndCTA    — tech chips + outbound visit-site CTA in
- *                       project's accent color
- *   5. NextProject    — kinetic row pagination, wraps around the
- *                       WORK array
+ * Layout: sticky-nav split-screen (Apple Developer docs pattern).
+ *   - Left third: sticky chapter navigator + project meta + headline
+ *     stat. Auto-highlights the active chapter as the user scrolls
+ *     (driven by IntersectionObserver in the variant).
+ *   - Right two-thirds: scrolling content — overview with summary +
+ *     pull quote + stats grid, then narrative chapters with
+ *     numbered highlight lists, then stack + outbound CTA.
+ *   - Mid-body interlude after Chapter 01 — full-bleed band with
+ *     accent border-y top + bottom, centered eyebrow, massive
+ *     italic display sans pull quote (lifted from the Editorial
+ *     variant).
  *
- * Each project's accent color is sampled from Apple's HIG system
- * colors — Simplicity blue, CodeWithAli orange, CWA Manager purple,
- * Sovereign green. The accent appears in: the period after the name,
- * the stat eyebrows, the highlight bullets, the narrative block
- * border-left, the visit-site CTA background.
+ * Footer: kinetic next-project pagination that wraps the WORK array.
  */
 export default async function CaseStudy({ params }: Params) {
   const { slug } = await params;
@@ -63,29 +53,10 @@ export default async function CaseStudy({ params }: Params) {
 
   return (
     <main>
-      <CaseHero item={item} />
-      <StatsGrid stats={item.stats} accent={item.accent} />
+      <SplitScreenVariant item={item} />
 
-      {/* Narrative blocks */}
-      <section className="section py-24 md:py-32">
-        <div className="container-page">
-          <div className="space-y-20 md:space-y-28 max-w-5xl">
-            {item.blocks.map((block, i) => (
-              <NarrativeBlock
-                key={block.title}
-                block={block}
-                index={i}
-                accent={item.accent}
-              />
-            ))}
-          </div>
-        </div>
-      </section>
-
-      <StackAndCTA item={item} />
-
-      {/* Next project */}
-      <section className="border-t border-[var(--color-divider)]">
+      {/* Next project pagination */}
+      <section className="border-t border-[var(--color-divider)] mt-24">
         <div className="container-page pt-12 md:pt-16">
           <p className="type-eyebrow text-[var(--color-ink-3)] mb-4">
             / Next project

@@ -36,6 +36,10 @@ export interface WorkItem {
   summary: string;
   /** Pull-quote shown big on the case study page */
   quote: string;
+  /** Mid-body interlude — short italic statement that punctuates
+   *  the case study body between the first and second narrative
+   *  blocks. Apple-style "this changes everything" beat. */
+  interlude: string;
   /** 4 numbers used in the case-study stats grid */
   stats: WorkStat[];
   /** 2-4 narrative blocks that make up the case study body */
@@ -60,6 +64,7 @@ export const WORK: WorkItem[] = [
       "A real operating system for your money — not another budgeting app.",
     quote:
       "Every budgeting app I tried felt like a spreadsheet with a paint job. So I built the version I actually wanted to use.",
+    interlude: "End-to-end. One person. Production grade.",
     stats: [
       { value: "120k+", label: "Lines shipped", hint: "frontend + backend + agents" },
       { value: "240+", label: "Components", hint: "in-house design system" },
@@ -104,6 +109,7 @@ export const WORK: WorkItem[] = [
       "An independent software studio. I work with founders on the parts of their stack that need taste.",
     quote:
       "Most teams quietly hate touching their design systems and their agent infrastructure. So that's most of what I work on.",
+    interlude: "Selective by design. Shipped by deadline.",
     stats: [
       { value: "20+", label: "Engagements", hint: "across 4 years" },
       { value: "<8wk", label: "Ship time", hint: "kickoff to delivery" },
@@ -141,6 +147,7 @@ export const WORK: WorkItem[] = [
       "A native desktop operator that ships code through a real workspace and talks back.",
     quote:
       "I wanted a desktop agent that actually drove a workspace. So I wrote the whole thing — Tauri, Rust, MCP, voice — myself.",
+    interlude: "Operator-grade. Native to the metal.",
     stats: [
       { value: "Tauri", label: "Native shell", hint: "Rust + React" },
       { value: "MCP", label: "Protocol", hint: "open Anthropic spec" },
@@ -177,6 +184,7 @@ export const WORK: WorkItem[] = [
     summary: "The internal command deck for Simplicity.",
     quote:
       "Three weeks from spec to shipped. The kind of admin surface that's a privilege to build because no one outside ops will ever see it.",
+    interlude: "Boring on purpose. Useful every day.",
     stats: [
       { value: "3 wks", label: "Spec to ship" },
       { value: "Bento", label: "Layout" },
