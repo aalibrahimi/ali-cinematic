@@ -5,6 +5,8 @@ import { useRef } from "react";
 import Link from "next/link";
 import { ArrowUpRight } from "lucide-react";
 
+const APPLE_EASE = [0.32, 0.72, 0, 1] as const;
+
 /**
  * Featured — Simplicity, the multi-stage product treatment.
  *
@@ -59,7 +61,7 @@ export function Featured() {
   const statsOpacity = useTransform(
     progress,
     [0.3, 0.45, 0.75, 0.85],
-    [0, 1, 1, 0]
+    [0, 1, 1, 0],
   );
   const statsY = useTransform(progress, [0.3, 0.45], [60, 0]);
 
@@ -111,8 +113,8 @@ export function Featured() {
             Simplicity<span className="text-[var(--color-accent)]">.</span>
           </h2>
           <p className="type-body-lg mt-6 md:mt-8 max-w-[42ch]">
-            A personal finance operating system. Built end-to-end —
-            design, schema, agent stack, the whole spine.
+            A personal finance operating system. Built end-to-end — design,
+            schema, agent stack, the whole spine.
           </p>
         </motion.div>
 
@@ -150,7 +152,7 @@ export function Featured() {
               <ArrowUpRight size={16} strokeWidth={2} />
             </Link>
             <a
-              href="https://simplicityfunds.com"
+              href="https://simplicityfunds.co"
               target="_blank"
               rel="noopener noreferrer"
               className="inline-flex items-center gap-2.5 px-6 py-3.5 rounded-full border border-[var(--color-divider)] text-[var(--color-ink)] text-sm font-medium hover:border-[var(--color-ink-2)] transition-colors duration-300"
@@ -207,99 +209,249 @@ function StatCell({
 }
 
 /**
- * SimplicityMockup — abstract dashboard frame.
+ * SimplicityMockup — brand-art card (replaced the screenshot mockup).
  *
- * A stylized phone-aspect card that suggests Simplicity's actual UI
- * without literally rendering it. Built entirely in CSS — header bar,
- * KPI row, chart placeholder, transaction list. Sized to feel
- * "product-shot worthy" against the cinematic dark canvas.
+ * Apple-album-cover energy rather than fake-product-screenshot. Dark
+ * zinc surface with:
+ *   - Subtle dot-grid background pattern
+ *   - Animated chart line (SVG path that draws itself)
+ *   - Floating geometric "feature" symbols at the corners (cash,
+ *     chart, target, calendar — abstract glyphs, not literal icons)
+ *   - SIMPLICITY wordmark glowing at center with a subtle pulse
+ *   - Tagline below
+ *   - Three small metric chips at the bottom
+ *
+ * The card lives in the same scroll-pinned slot as the previous
+ * mockup (parent applies the scale + rotate transforms), so all the
+ * cinematic motion still hits — only the *content* of the slot
+ * changed from "fake product UI" to "designed brand art."
  */
 function SimplicityMockup() {
   return (
-    <div className="w-[min(80vw,640px)] aspect-[3/2] relative">
-      {/* Card frame with glass + glow */}
-      <div className="absolute inset-0 rounded-3xl bg-[var(--color-surface-2)] border border-[var(--color-divider)] overflow-hidden">
-        {/* Inner content area */}
-        <div className="h-full p-6 md:p-8 flex flex-col gap-4 opacity-30">
-          {/* Header row */}
-          <div className="flex items-center justify-between">
-            <div className="flex items-center gap-3">
-              <div className="size-8 rounded-lg bg-[var(--color-accent)]/30" />
-              <div className="h-3 w-32 rounded bg-[var(--color-ink-3)]" />
-            </div>
-            <div className="h-3 w-20 rounded bg-[var(--color-ink-3)]" />
-          </div>
+    <div className="w-[min(85vw,820px)] aspect-[16/10] relative">
+      {/* Card frame */}
+      <div className="absolute inset-0 rounded-3xl overflow-hidden bg-[var(--color-surface-2)] border border-[var(--color-divider)]">
+        {/* Subtle dot-grid background pattern */}
+        <div
+          aria-hidden
+          className="absolute inset-0 opacity-[0.18] pointer-events-none"
+          style={{
+            backgroundImage:
+              "radial-gradient(circle, rgba(255,255,255,0.4) 1px, transparent 1px)",
+            backgroundSize: "20px 20px",
+          }}
+        />
 
-          {/* KPI row */}
-          <div className="grid grid-cols-3 gap-3 mt-2">
-            {[1, 2, 3].map((i) => (
-              <div
-                key={i}
-                className="h-20 rounded-xl border border-[var(--color-divider)] bg-[var(--color-surface)] p-3 flex flex-col justify-between"
-              >
-                <div className="h-2 w-12 rounded bg-[var(--color-ink-3)]" />
-                <div className="h-5 w-16 rounded bg-[var(--color-ink-2)]" />
-              </div>
-            ))}
-          </div>
+        {/* Top accent gradient — single beat of Apple blue at the
+            top edge, fades into the canvas. */}
+        <div
+          aria-hidden
+          className="absolute top-0 inset-x-0 h-1/2 pointer-events-none"
+          style={{
+            background:
+              "radial-gradient(ellipse 70% 50% at 50% 0%, rgba(10, 132, 255, 0.18) 0%, transparent 70%)",
+          }}
+        />
 
-          {/* Chart placeholder */}
-          <div className="flex-1 rounded-xl border border-[var(--color-divider)] bg-[var(--color-surface)] relative overflow-hidden">
-            <svg
-              className="absolute inset-0 w-full h-full"
-              viewBox="0 0 300 120"
-              preserveAspectRatio="none"
-            >
-              <defs>
-                <linearGradient id="chartFill" x1="0" y1="0" x2="0" y2="1">
-                  <stop offset="0%" stopColor="rgba(10, 132, 255, 0.4)" />
-                  <stop
-                    offset="100%"
-                    stopColor="rgba(10, 132, 255, 0.0)"
-                  />
-                </linearGradient>
-              </defs>
-              <path
-                d="M 0 80 L 30 70 L 60 75 L 90 50 L 120 55 L 150 35 L 180 45 L 210 25 L 240 30 L 270 15 L 300 20 L 300 120 L 0 120 Z"
-                fill="url(#chartFill)"
-              />
-              <path
-                d="M 0 80 L 30 70 L 60 75 L 90 50 L 120 55 L 150 35 L 180 45 L 210 25 L 240 30 L 270 15 L 300 20"
-                fill="none"
-                stroke="rgba(10, 132, 255, 0.6)"
-                strokeWidth="1.5"
-              />
-            </svg>
-          </div>
+        {/* Floating geometric feature glyphs — small accent shapes
+            at each corner, hinting at the breadth of Simplicity's
+            domain (money, charts, targets, time) without being
+            literal icons. */}
+        <FeatureGlyph type="ring" position="top-left" />
+        <FeatureGlyph type="bars" position="top-right" />
+        <FeatureGlyph type="target" position="bottom-left" />
+        <FeatureGlyph type="dots" position="bottom-right" />
 
-          {/* Transaction rows */}
-          <div className="space-y-2">
-            {[1, 2, 3].map((i) => (
-              <div
-                key={i}
-                className="flex items-center justify-between py-2"
-              >
-                <div className="flex items-center gap-3">
-                  <div className="size-6 rounded-md bg-[var(--color-ink-3)]/40" />
-                  <div className="h-2.5 w-24 rounded bg-[var(--color-ink-3)]" />
-                </div>
-                <div className="h-2.5 w-16 rounded bg-[var(--color-ink-2)]/50" />
-              </div>
-            ))}
-          </div>
+        {/* Animated chart line — sweeps across the card mid-height,
+            draws itself in on view. The visual identity beat. */}
+        <svg
+          className="absolute left-0 right-0 top-1/2 -translate-y-12 w-full h-32 pointer-events-none"
+          viewBox="0 0 800 100"
+          preserveAspectRatio="none"
+        >
+          <defs>
+            <linearGradient id="brandChart" x1="0" y1="0" x2="1" y2="0">
+              <stop offset="0%" stopColor="rgba(10, 132, 255, 0)" />
+              <stop offset="50%" stopColor="rgba(10, 132, 255, 0.7)" />
+              <stop offset="100%" stopColor="rgba(10, 132, 255, 0)" />
+            </linearGradient>
+          </defs>
+          <motion.path
+            d="M 0 70 Q 100 40, 200 50 T 400 30 T 600 40 T 800 20"
+            fill="none"
+            stroke="url(#brandChart)"
+            strokeWidth="2"
+            strokeLinecap="round"
+            initial={{ pathLength: 0, opacity: 0 }}
+            whileInView={{ pathLength: 1, opacity: 1 }}
+            viewport={{ once: true }}
+            transition={{ duration: 2, ease: APPLE_EASE }}
+          />
+        </svg>
+
+        {/* Center: wordmark + tagline */}
+        <div className="absolute inset-0 flex flex-col items-center justify-center text-center px-8 z-10">
+          <motion.p
+            initial={{ opacity: 0, y: 12 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.9, delay: 0.3, ease: APPLE_EASE }}
+            className="font-[family-name:var(--font-mono)] text-[0.7rem] tracking-[0.32em] uppercase text-[var(--color-accent)] mb-4"
+          >
+            · Simplicity
+          </motion.p>
+
+          <motion.h3
+            initial={{ opacity: 0, y: 16, filter: "blur(6px)" }}
+            whileInView={{ opacity: 1, y: 0, filter: "blur(0)" }}
+            viewport={{ once: true }}
+            transition={{ duration: 1.1, delay: 0.4, ease: APPLE_EASE }}
+            className="font-[family-name:var(--font-display)] font-semibold tracking-tight leading-none text-[clamp(2.5rem,7vw,5rem)] text-[var(--color-ink)]"
+            style={{
+              textShadow: "0 0 60px rgba(10, 132, 255, 0.4)",
+            }}
+          >
+            Money,{" "}
+            <span className="italic" style={{ color: "var(--color-accent)" }}>
+              simplified
+            </span>
+            .
+          </motion.h3>
+
+          <motion.p
+            initial={{ opacity: 0 }}
+            whileInView={{ opacity: 1 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.9, delay: 0.7 }}
+            className="text-sm md:text-base text-[var(--color-ink-2)] mt-4 max-w-[36ch]"
+          >
+            One clean page. Every account. Every dollar.
+          </motion.p>
         </div>
+
+        {/* Bottom: metric chips */}
+        <motion.div
+          initial={{ opacity: 0, y: 8 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true }}
+          transition={{ duration: 0.9, delay: 1, ease: APPLE_EASE }}
+          className="absolute bottom-6 md:bottom-8 left-1/2 -translate-x-1/2 flex items-center gap-2"
+        >
+          {(
+            [
+              ["RT", "real time"],
+              ["E2E", "end to end"],
+              ["1:1", "solo built"],
+            ] as const
+          ).map(([label, desc]) => (
+            <div
+              key={label}
+              className="flex items-center gap-2 px-3 py-1.5 rounded-full border border-[var(--color-divider)] bg-[var(--color-canvas)]/60 backdrop-blur-sm"
+            >
+              <span
+                className="font-[family-name:var(--font-mono)] text-[0.65rem] font-semibold tracking-wider"
+                style={{ color: "var(--color-accent)" }}
+              >
+                {label}
+              </span>
+              <span className="text-[0.65rem] text-[var(--color-ink-3)] uppercase tracking-wider">
+                {desc}
+              </span>
+            </div>
+          ))}
+        </motion.div>
       </div>
 
-      {/* Soft glow under the mockup — gives it product-shot lift */}
+      {/* Soft glow under the card — Apple-style product lift */}
       <div
         aria-hidden
         className="absolute -bottom-12 left-1/2 -translate-x-1/2 w-3/4 h-12 rounded-full pointer-events-none"
         style={{
           background:
-            "radial-gradient(ellipse, rgba(10, 132, 255, 0.18) 0%, transparent 70%)",
-          filter: "blur(20px)",
+            "radial-gradient(ellipse, rgba(10, 132, 255, 0.22) 0%, transparent 70%)",
+          filter: "blur(24px)",
         }}
       />
     </div>
+  );
+}
+
+/**
+ * FeatureGlyph — small geometric symbol at one corner of the brand
+ * card. Four variants, each a different abstract shape that hints at
+ * a different domain Simplicity covers (cash flow, charts, goals,
+ * connections). Designed to read as iconography, not UI.
+ */
+function FeatureGlyph({
+  type,
+  position,
+}: {
+  type: "ring" | "bars" | "target" | "dots";
+  position: "top-left" | "top-right" | "bottom-left" | "bottom-right";
+}) {
+  const positionClass: Record<typeof position, string> = {
+    "top-left": "top-6 left-6 md:top-8 md:left-8",
+    "top-right": "top-6 right-6 md:top-8 md:right-8",
+    "bottom-left": "bottom-20 left-6 md:bottom-24 md:left-8",
+    "bottom-right": "bottom-20 right-6 md:bottom-24 md:right-8",
+  };
+
+  return (
+    <motion.div
+      initial={{ opacity: 0, scale: 0.7 }}
+      whileInView={{ opacity: 0.5, scale: 1 }}
+      viewport={{ once: true }}
+      transition={{ duration: 0.8, delay: 0.5, ease: APPLE_EASE }}
+      className={`absolute ${positionClass[position]} pointer-events-none`}
+    >
+      <svg
+        width={32}
+        height={32}
+        viewBox="0 0 32 32"
+        fill="none"
+        className="text-[var(--color-ink-2)]"
+      >
+        {type === "ring" && (
+          <>
+            <circle cx="16" cy="16" r="14" stroke="currentColor" strokeWidth="1" />
+            <circle cx="16" cy="16" r="6" stroke="currentColor" strokeWidth="1" />
+          </>
+        )}
+        {type === "bars" && (
+          <>
+            <rect x="4" y="20" width="4" height="8" fill="currentColor" />
+            <rect x="11" y="14" width="4" height="14" fill="currentColor" />
+            <rect x="18" y="8" width="4" height="20" fill="currentColor" />
+            <rect x="25" y="4" width="4" height="24" fill="var(--color-accent)" />
+          </>
+        )}
+        {type === "target" && (
+          <>
+            <circle cx="16" cy="16" r="14" stroke="currentColor" strokeWidth="1" />
+            <circle cx="16" cy="16" r="9" stroke="currentColor" strokeWidth="1" />
+            <circle cx="16" cy="16" r="4" fill="var(--color-accent)" />
+          </>
+        )}
+        {type === "dots" && (
+          <>
+            {[0, 1, 2, 3].map((row) =>
+              [0, 1, 2, 3].map((col) => (
+                <circle
+                  key={`${row}-${col}`}
+                  cx={4 + col * 8}
+                  cy={4 + row * 8}
+                  r="1.5"
+                  fill={
+                    row === 1 && col === 1
+                      ? "var(--color-accent)"
+                      : "currentColor"
+                  }
+                />
+              ))
+            )}
+          </>
+        )}
+      </svg>
+    </motion.div>
   );
 }

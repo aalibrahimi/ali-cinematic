@@ -8,6 +8,7 @@ import {
   animate,
 } from "motion/react";
 import Link from "next/link";
+import Image from "next/image";
 import { Fragment, useEffect, useRef, useState } from "react";
 import { ArrowLeft, ArrowUpRight } from "lucide-react";
 import type { WorkItem, WorkStat } from "@/lib/work";
@@ -46,6 +47,59 @@ export function SplitScreenVariant({ item }: Props) {
       <StatsGrid stats={item.stats} accent={item.accent} />
       <SplitBody item={item} />
     </>
+  );
+}
+
+/* ─────────────────────────────────────────────────────────────────
+   InlineScreenshot — column-width product shot rendered inside
+   Chapter 01 as a proper <figure>. Replaces the previous full-bleed
+   standalone Screenshot section that dominated the page; this
+   version reads as a visual aside within the document flow, sized
+   to the right column it lives in.
+   ───────────────────────────────────────────────────────────────── */
+
+function InlineScreenshot({
+  image,
+  alt,
+  accent,
+}: {
+  image: string;
+  alt: string;
+  accent: string;
+}) {
+  return (
+    <motion.figure
+      initial={{ opacity: 0, y: 24 }}
+      whileInView={{ opacity: 1, y: 0 }}
+      viewport={{ once: true, margin: "-10%" }}
+      transition={{ duration: 0.9, ease: APPLE_EASE }}
+      className="relative my-2 gpu"
+    >
+      <div
+        className="relative w-full aspect-[16/10] rounded-2xl overflow-hidden border bg-[var(--color-surface-2)]"
+        style={{ borderColor: `${accent}30` }}
+      >
+        <Image
+          src={image}
+          alt={`${alt} home page`}
+          fill
+          sizes="(max-width: 768px) 100vw, (max-width: 1280px) 67vw, 800px"
+          className="object-cover object-top"
+        />
+      </div>
+      {/* Soft accent glow underneath — subtle product-shot lift */}
+      <div
+        aria-hidden
+        className="absolute -bottom-6 left-1/2 -translate-x-1/2 w-2/3 h-8 rounded-full pointer-events-none"
+        style={{
+          background: `radial-gradient(ellipse, ${accent}25 0%, transparent 70%)`,
+          filter: "blur(20px)",
+        }}
+      />
+      <figcaption className="mt-6 text-xs text-[var(--color-ink-3)] font-[family-name:var(--font-mono)] tracking-wide">
+        / {alt} · live preview
+      </figcaption>
+    </motion.figure>
   );
 }
 
@@ -385,6 +439,18 @@ function SplitBody({ item }: { item: WorkItem }) {
                 <h2 className="type-display-md text-[var(--color-ink)] max-w-[24ch] leading-tight">
                   {block.title}
                 </h2>
+
+                {/* Inline screenshot — only on Chapter 01, only when
+                    the project has an image. Sits between the title
+                    and the body prose like a magazine figure. */}
+                {i === 0 && item.image && (
+                  <InlineScreenshot
+                    image={item.image}
+                    alt={item.name}
+                    accent={item.accent}
+                  />
+                )}
+
                 <p className="type-body-lg text-[var(--color-ink-2)] max-w-[64ch]">
                   {block.body}
                 </p>

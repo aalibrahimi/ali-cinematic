@@ -74,10 +74,10 @@ export function Contact() {
           }}
           className="type-body-lg max-w-[52ch] mb-14 md:mb-20"
         >
-          I take a small number of engagements each year through CodeWithAli.
-          If you&apos;re working on something that needs both the design and
-          the engineering — or one of them in a way the other doesn&apos;t
-          respect — I&apos;d like to hear about it.
+          I take a small number of engagements each year through CodeWithAli. If
+          you&apos;re working on something that needs both the design and the
+          engineering — or one of them in a way the other doesn&apos;t respect —
+          I&apos;d like to hear about it.
         </motion.p>
 
         {/* CTA row */}
@@ -96,10 +96,7 @@ export function Contact() {
             <Mail size={16} strokeWidth={2} />
             ali@codewithali.com
           </MagneticButton>
-          <MagneticButton
-            href="https://codewithali.com"
-            external
-          >
+          <MagneticButton href="https://codewithali.com" external>
             The studio
             <ArrowUpRight size={16} strokeWidth={2} />
           </MagneticButton>
@@ -114,7 +111,7 @@ export function Contact() {
           className="flex flex-wrap items-center gap-x-8 gap-y-3 type-eyebrow pt-8 border-t border-[var(--color-divider)]"
         >
           <a
-            href="https://github.com/codewithalix"
+            href="https://github.com/aalibrahimi"
             target="_blank"
             rel="noopener noreferrer"
             className="text-[var(--color-ink-2)] hover:text-[var(--color-accent)] transition-colors flex items-center gap-1.5"
@@ -122,7 +119,7 @@ export function Contact() {
             GitHub <ArrowUpRight size={11} strokeWidth={2} />
           </a>
           <a
-            href="https://linkedin.com/in/alialibrahimi"
+            href="https://linkedin.com/in/aalibrahimi"
             target="_blank"
             rel="noopener noreferrer"
             className="text-[var(--color-ink-2)] hover:text-[var(--color-accent)] transition-colors flex items-center gap-1.5"
@@ -130,15 +127,7 @@ export function Contact() {
             LinkedIn <ArrowUpRight size={11} strokeWidth={2} />
           </a>
           <a
-            href="https://x.com/codewithali"
-            target="_blank"
-            rel="noopener noreferrer"
-            className="text-[var(--color-ink-2)] hover:text-[var(--color-accent)] transition-colors flex items-center gap-1.5"
-          >
-            X / Twitter <ArrowUpRight size={11} strokeWidth={2} />
-          </a>
-          <a
-            href="https://simplicityfunds.com"
+            href="https://simplicityfunds.co"
             target="_blank"
             rel="noopener noreferrer"
             className="text-[var(--color-ink-2)] hover:text-[var(--color-accent)] transition-colors flex items-center gap-1.5"

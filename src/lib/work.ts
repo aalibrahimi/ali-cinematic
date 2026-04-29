@@ -50,6 +50,10 @@ export interface WorkItem {
   link?: { label: string; href: string };
   /** Apple-system-color accent for this project's case study */
   accent: string;
+  /** Optional product screenshot path (relative to /public). When
+   *  set, rendered as a real image in case-study + Featured;
+   *  otherwise falls back to the abstract mockup. */
+  image?: string;
 }
 
 export const WORK: WorkItem[] = [
@@ -66,9 +70,17 @@ export const WORK: WorkItem[] = [
       "Every budgeting app I tried felt like a spreadsheet with a paint job. So I built the version I actually wanted to use.",
     interlude: "End-to-end. One person. Production grade.",
     stats: [
-      { value: "120k+", label: "Lines shipped", hint: "frontend + backend + agents" },
+      {
+        value: "120k+",
+        label: "Lines shipped",
+        hint: "frontend + backend + agents",
+      },
       { value: "240+", label: "Components", hint: "in-house design system" },
-      { value: "3.5s", label: "Cold load", hint: "down from 21s in one sprint" },
+      {
+        value: "3.5s",
+        label: "Cold load",
+        hint: "down from 21s in one sprint",
+      },
       { value: "Solo", label: "Founder", hint: "design · code · infra" },
     ],
     blocks: [
@@ -93,10 +105,11 @@ export const WORK: WorkItem[] = [
     ],
     tags: ["Next.js", "Postgres", "Plaid", "Stripe", "Design system", "Solo"],
     link: {
-      label: "simplicityfunds.com",
-      href: "https://simplicityfunds.com",
+      label: "simplicityfunds.co",
+      href: "https://simplicityfunds.co",
     },
     accent: "#0a84ff",
+    image: "/work/simplicity-home.png",
   },
   {
     slug: "codewithali",
@@ -135,29 +148,34 @@ export const WORK: WorkItem[] = [
     tags: ["Studio", "Consulting", "Engineering", "Design"],
     link: { label: "codewithali.com", href: "https://codewithali.com" },
     accent: "#ff9f0a",
+    image: "/work/cwa-home.png",
   },
   {
-    slug: "cwa-manager",
+    slug: "takeover",
     index: "03",
-    name: "CWA Manager",
+    name: "Takeover",
     kind: "Native operator",
     year: "2025—",
     role: "Founder · sole engineer",
     summary:
-      "A native desktop operator that ships code through a real workspace and talks back.",
+      "A native desktop operator that runs the whole studio — projects, finances, meetings, AXON the on-call agent.",
     quote:
-      "I wanted a desktop agent that actually drove a workspace. So I wrote the whole thing — Tauri, Rust, MCP, voice — myself.",
+      "I wanted one window that could see every project I run. So I built it — Tauri, Rust, MCP, voice — myself.",
     interlude: "Operator-grade. Native to the metal.",
     stats: [
       { value: "Tauri", label: "Native shell", hint: "Rust + React" },
       { value: "MCP", label: "Protocol", hint: "open Anthropic spec" },
-      { value: "Voice", label: "First-class", hint: "TTS cadence tuned by hand" },
+      {
+        value: "Voice",
+        label: "First-class",
+        hint: "TTS cadence tuned by hand",
+      },
       { value: "Auto", label: "Agent mode", hint: "code-gen pipelines" },
     ],
     blocks: [
       {
         title: "What it is",
-        body: "CWA Manager is a native desktop operator built around the Axon agent layer. Voice-first conversation, autonomous code-gen mode, multi-project workspaces, persistent session summaries, voice-print sensitive-action gate. The thing that should exist for solo founders who are actually shipping.",
+        body: "Takeover is a native desktop operator built around the AXON agent layer. One window that surfaces every project, every metric, every meeting — with a voice-first agent at the bottom-right that's always one prompt away from acting on what's on screen.",
       },
       {
         title: "What's in it",
@@ -173,6 +191,7 @@ export const WORK: WorkItem[] = [
     ],
     tags: ["Tauri", "Rust", "React", "MCP", "Voice UX", "GSAP"],
     accent: "#bf5af2",
+    image: "/work/takeover-home.png",
   },
   {
     slug: "sovereign",

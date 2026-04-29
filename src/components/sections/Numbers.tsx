@@ -8,6 +8,7 @@ import {
   animate,
 } from "motion/react";
 import { useEffect, useRef } from "react";
+import { useReducedMotion } from "@/lib/useReducedMotion";
 
 /**
  * Numbers — four oversized stats with count-up animation.
@@ -33,7 +34,7 @@ const STATS: Stat[] = [
     value: 4,
     suffix: "",
     label: "Active projects",
-    description: "Simplicity, CodeWithAli, CWA Manager, Sovereign",
+    description: "Simplicity, CodeWithAli, Takeover, Sovereign",
   },
   {
     value: 120,
@@ -110,7 +111,8 @@ export function Numbers() {
 function NumberCell({ stat, index }: { stat: Stat; index: number }) {
   const ref = useRef<HTMLDivElement>(null);
   const inView = useInView(ref, { once: true, margin: "-25%" });
-  const count = useMotionValue(0);
+  const reduced = useReducedMotion();
+  const count = useMotionValue(reduced ? stat.value : 0);
 
   // Format with locale comma separator. For non-integer suffix values
   // (like "k+"), display as integer; for "%", same.
@@ -119,14 +121,18 @@ function NumberCell({ stat, index }: { stat: Stat; index: number }) {
   );
 
   useEffect(() => {
-    if (!inView) return;
+    // When reduced-motion is on, skip the count-up entirely — the
+    // motion value is already initialized to the target above, so
+    // the cell renders the final number instantly. Same content,
+    // no animation.
+    if (!inView || reduced) return;
     const controls = animate(count, stat.value, {
       duration: 1.6,
       ease: [0.32, 0.72, 0, 1],
       delay: index * 0.12,
     });
     return controls.stop;
-  }, [inView, count, stat.value, index]);
+  }, [inView, count, stat.value, index, reduced]);
 
   return (
     <motion.div

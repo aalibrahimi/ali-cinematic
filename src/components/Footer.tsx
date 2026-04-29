@@ -49,7 +49,7 @@ export function Footer() {
               { label: "All projects", href: "/work" },
               { label: "Simplicity", href: "/work/simplicity" },
               { label: "CodeWithAli", href: "/work/codewithali" },
-              { label: "CWA Manager", href: "/work/cwa-manager" },
+              { label: "Takeover", href: "/work/takeover" },
               { label: "Sovereign", href: "/work/sovereign" },
             ]}
           />
@@ -74,17 +74,12 @@ export function Footer() {
               },
               {
                 label: "GitHub",
-                href: "https://github.com/codewithalix",
+                href: "https://github.com/aalibrahimi",
                 external: true,
               },
               {
                 label: "LinkedIn",
-                href: "https://linkedin.com/in/alialibrahimi",
-                external: true,
-              },
-              {
-                label: "X / Twitter",
-                href: "https://x.com/codewithali",
+                href: "https://linkedin.com/in/aalibrahimi",
                 external: true,
               },
             ]}

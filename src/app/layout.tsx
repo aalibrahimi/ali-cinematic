@@ -1,6 +1,7 @@
 import type { Metadata, Viewport } from "next";
 import { Geist, Geist_Mono } from "next/font/google";
 import { LenisProvider } from "@/components/ui/LenisProvider";
+import { ServiceWorkerRegister } from "@/components/ui/ServiceWorkerRegister";
 import { Nav } from "@/components/Nav";
 import { Footer } from "@/components/Footer";
 import "./globals.css";
@@ -50,12 +51,28 @@ export const metadata: Metadata = {
       "Software designer and engineer. End-to-end builder of products and the systems that hold them up.",
   },
   robots: { index: true, follow: true },
+  // PWA — these tags are what makes iOS treat the site as an
+  // installable app when added to the home screen. Apple ignores
+  // the standard PWA manifest and requires its own meta dialect.
+  appleWebApp: {
+    capable: true,
+    title: "Ali",
+    statusBarStyle: "black-translucent",
+  },
+  applicationName: "Ali Alibrahimi",
+  formatDetection: {
+    telephone: false,
+  },
 };
 
 export const viewport: Viewport = {
   themeColor: "#000000",
   width: "device-width",
   initialScale: 1,
+  maximumScale: 5,
+  // viewport-fit=cover is what makes iOS PWAs draw under the
+  // notch + home indicator so the standalone app feels native.
+  viewportFit: "cover",
 };
 
 export default function RootLayout({
@@ -74,6 +91,7 @@ export default function RootLayout({
           {children}
           <Footer />
         </LenisProvider>
+        <ServiceWorkerRegister />
       </body>
     </html>
   );
