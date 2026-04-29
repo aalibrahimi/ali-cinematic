@@ -27,6 +27,11 @@
   --font-sans: var(--font-sans), "Geist", "SF Pro Text", system-ui, sans-serif;
   --font-mono: var(--font-mono), "Geist Mono", "SF Mono", ui-monospace,
     monospace;
+  /* Editorial chapter font — Instrument Serif. Used surgically in
+     case-study chapter titles. High-contrast italic serif for the
+     "Apple Newsroom article" voice. */
+  --font-chapter: var(--font-chapter), "Instrument Serif", "GT Super",
+    "Times New Roman", serif;
 
   /* ── Apple dark-mode palette ─────────────────────────────────────
      Sampled from Apple.com's product pages. The naming follows
@@ -113,6 +118,20 @@ body {
   font-size: clamp(2rem, 5vw, 4rem);
   line-height: 1.02;
   letter-spacing: -0.02em;
+}
+
+/* ── Editorial chapter title — Instrument Serif italic ───────────
+   Used surgically in case-study chapter heads. The serif italic
+   creates a typographic counterpoint to the rest of the page
+   (Geist sans-serif), making the chapter beats feel "edited" — the
+   trick Apple uses on Newsroom articles and product narratives. */
+.type-chapter {
+  font-family: var(--font-chapter);
+  font-style: italic;
+  font-weight: 400;
+  font-size: clamp(2.25rem, 5.2vw, 4rem);
+  line-height: 1;
+  letter-spacing: -0.015em;
 }
 
 .type-title {

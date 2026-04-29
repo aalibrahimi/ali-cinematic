@@ -1,5 +1,5 @@
 import type { Metadata, Viewport } from "next";
-import { Geist, Geist_Mono } from "next/font/google";
+import { Geist, Geist_Mono, Instrument_Serif } from "next/font/google";
 import { LenisProvider } from "@/components/ui/LenisProvider";
 import { ServiceWorkerRegister } from "@/components/ui/ServiceWorkerRegister";
 import { Nav } from "@/components/Nav";
@@ -24,6 +24,19 @@ const sans = Geist({
 const mono = Geist_Mono({
   subsets: ["latin"],
   variable: "--font-mono",
+  display: "swap",
+});
+
+// Instrument Serif — high-contrast editorial serif, used surgically
+// for chapter titles inside case studies. The Apple-Newsroom move:
+// Geist for everything, italic serif for the chapter heads only.
+// That single typographic switch is what makes a product narrative
+// page feel "edited" rather than "documented."
+const chapter = Instrument_Serif({
+  subsets: ["latin"],
+  weight: ["400"],
+  style: ["normal", "italic"],
+  variable: "--font-chapter",
   display: "swap",
 });
 
@@ -83,7 +96,7 @@ export default function RootLayout({
   return (
     <html
       lang="en"
-      className={`${display.variable} ${sans.variable} ${mono.variable}`}
+      className={`${display.variable} ${sans.variable} ${mono.variable} ${chapter.variable}`}
     >
       <body>
         <LenisProvider>

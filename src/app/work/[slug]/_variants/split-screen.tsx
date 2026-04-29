@@ -75,16 +75,27 @@ function InlineScreenshot({
       transition={{ duration: 0.9, ease: APPLE_EASE }}
       className="relative my-2 gpu"
     >
+      {/* Image renders at its native aspect ratio (no forced crop).
+          `unoptimized` serves the source PNG as-is — no WebP
+          transcoding, no quality compression, no downsampling. For
+          a small number of high-res screenshots this is the cleanest
+          path to "what you saved is what gets rendered." We give up
+          automatic responsive variants, but the file is served once
+          and cached, so the bandwidth cost is negligible.
+
+          width/height are required by next/image as aspect-ratio
+          hints; actual displayed size comes from `w-full h-auto`. */}
       <div
-        className="relative w-full aspect-[16/10] rounded-2xl overflow-hidden border bg-[var(--color-surface-2)]"
+        className="relative w-full overflow-hidden rounded-2xl border bg-[var(--color-surface-2)]"
         style={{ borderColor: `${accent}30` }}
       >
         <Image
           src={image}
           alt={`${alt} home page`}
-          fill
-          sizes="(max-width: 768px) 100vw, (max-width: 1280px) 67vw, 800px"
-          className="object-cover object-top"
+          width={2600}
+          height={1600}
+          unoptimized
+          className="w-full h-auto block"
         />
       </div>
       {/* Soft accent glow underneath — subtle product-shot lift */}
@@ -436,7 +447,7 @@ function SplitBody({ item }: { item: WorkItem }) {
                     Chapter {String(i + 1).padStart(2, "0")}
                   </span>
                 </div>
-                <h2 className="type-display-md text-[var(--color-ink)] max-w-[24ch] leading-tight">
+                <h2 className="type-chapter text-[var(--color-ink)] max-w-[24ch]">
                   {block.title}
                 </h2>
 
