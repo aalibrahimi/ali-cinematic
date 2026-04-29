@@ -3,6 +3,7 @@
 import { motion, useScroll, useTransform } from "motion/react";
 import { useRef } from "react";
 import { BrandMark } from "@/components/ui/BrandMark";
+import { Hero3DLoader } from "@/components/ui/Hero3DLoader";
 import { APPLE_EASE, HERO_SEQUENCE } from "@/lib/motion";
 
 /**
@@ -76,9 +77,14 @@ export function Hero() {
       ref={ref}
       className="relative min-h-[100svh] flex flex-col items-center justify-center overflow-hidden"
     >
-      {/* Ambient gradient — slow infinite rotation. Z-0, behind
-          everything. The gradient itself is the only "color" on the
-          black canvas; everything else is in grayscale. */}
+      {/* 3D centerpiece — scoped to the hero section only. Sits
+          behind text via z-index. Multi-orbital particle scene
+          described in Hero3D.tsx. */}
+      <Hero3DLoader />
+
+      {/* Ambient gradient — slow infinite rotation. The gradient
+          itself is the only "color" on the black canvas; everything
+          else is in grayscale. */}
       <motion.div
         aria-hidden
         style={{ y: gradientY }}
@@ -90,7 +96,7 @@ export function Hero() {
           className="absolute inset-0"
           style={{
             background:
-              "radial-gradient(ellipse 60% 40% at 50% 0%, rgba(10, 132, 255, 0.18) 0%, rgba(10, 132, 255, 0.04) 40%, transparent 70%)",
+              "radial-gradient(ellipse 60% 40% at 50% 0%, rgba(10, 132, 255, 0.10) 0%, rgba(10, 132, 255, 0.02) 40%, transparent 70%)",
           }}
         />
       </motion.div>

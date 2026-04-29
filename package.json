@@ -15,12 +15,17 @@
     "react-dom": "19.2.5",
     "motion": "^12.38.0",
     "lenis": "^1.1.20",
-    "lucide-react": "^0.460.0"
+    "lucide-react": "^0.460.0",
+    "three": "^0.173.0",
+    "@react-three/fiber": "^9.0.0",
+    "@react-three/drei": "^10.0.0",
+    "@react-three/postprocessing": "^3.0.0"
   },
   "devDependencies": {
     "@types/node": "^22.10.0",
     "@types/react": "^19.0.0",
     "@types/react-dom": "^19.0.0",
+    "@types/three": "^0.173.0",
     "tailwindcss": "^4.2.4",
     "@tailwindcss/postcss": "^4.2.4",
     "postcss": "^8.5.0",
