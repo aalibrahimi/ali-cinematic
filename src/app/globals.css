@@ -1,0 +1,295 @@
+@import "tailwindcss";
+
+/* ─────────────────────────────────────────────────────────────────────────
+   ali-flagship · Apple-grade portfolio
+   Design language modeled on Apple's product page treatment:
+     - Pure black canvas (matches iPhone 15 Pro / Vision Pro pages)
+     - Pristine off-white type with whisper of warmth
+     - Surgical use of Apple system blue as the only accent
+     - Apple's exact dark-mode separator/secondaryLabel grays
+     - Typography ratios mirrored from sf-pro at display sizes
+     - Motion vocabulary tuned to Apple's signature ease curve
+
+   Implementation principles (the ones that matter for Safari/macOS):
+     - All animated elements use translate3d / will-change to stay on
+       the GPU compositor.
+     - backdrop-filter is paired with -webkit-backdrop-filter; Tailwind
+       4 handles this automatically but we double-check on glass nav.
+     - Lenis wraps the page so Chrome/Firefox match Safari's natural
+       scroll inertia. On macOS Safari this is mostly a no-op since
+       trackpad scrolling is already smooth.
+   ───────────────────────────────────────────────────────────────────────── */
+
+@theme {
+  /* Font stack — wired up via next/font in layout.tsx. */
+  --font-display: var(--font-display), "Geist", "SF Pro Display", system-ui,
+    sans-serif;
+  --font-sans: var(--font-sans), "Geist", "SF Pro Text", system-ui, sans-serif;
+  --font-mono: var(--font-mono), "Geist Mono", "SF Mono", ui-monospace,
+    monospace;
+
+  /* ── Apple dark-mode palette ─────────────────────────────────────
+     Sampled from Apple.com's product pages. The naming follows
+     Apple's HIG token vocabulary so the intent transfers between
+     designer + engineer reviews. */
+  --color-canvas: #000000;
+  --color-surface: #0a0a0a;
+  --color-surface-2: #1c1c1e;
+  --color-surface-3: #2c2c2e;
+  --color-ink: #f5f5f7;
+  --color-ink-2: #a1a1a6;
+  --color-ink-3: #6e6e73;
+  --color-ink-4: #48484a;
+  --color-divider: #38383a;
+  --color-divider-2: #2c2c2e;
+
+  /* Apple system blue — the only accent. Used surgically. */
+  --color-accent: #0a84ff;
+  --color-accent-hover: #409cff;
+  --color-accent-glow: rgba(10, 132, 255, 0.32);
+  --color-accent-wash: rgba(10, 132, 255, 0.08);
+}
+
+/* ── Document base ──────────────────────────────────────────────────── */
+html {
+  /* Apple uses scroll-behavior: smooth on body but Lenis takes over
+     once mounted. Setting it on html as a fallback for users with
+     reduced-motion (Lenis respects prefers-reduced-motion). */
+  scroll-behavior: smooth;
+  color-scheme: dark;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  text-rendering: optimizeLegibility;
+}
+
+body {
+  background: var(--color-canvas);
+  color: var(--color-ink);
+  font-family: var(--font-sans);
+  font-feature-settings: "ss01", "cv11";
+  /* No noise, no grain — Apple keeps the canvas perfectly clean.
+     The only ambient texture comes from intentional gradient washes
+     in specific sections. */
+  overflow-x: clip;
+}
+
+::selection {
+  background: var(--color-accent);
+  color: var(--color-ink);
+}
+
+/* ── Type scale — Apple display ratios ──────────────────────────────
+   Sizes mirror Apple's product pages:
+     - "Largest title" (hero name): clamp 4rem → 12rem (via 12vw)
+     - "Display large" (section heads): clamp 3rem → 7rem
+     - "Display medium" (sub heads): clamp 2rem → 4rem
+     - "Title 1" (card titles): clamp 1.5rem → 2rem
+     - "Body large": 19px (Apple's product-page reading size)
+     - "Body": 17px (Apple's standard)
+     - "Caption": 13px
+   Letter-spacing tightens at larger sizes — same trick Apple uses to
+   make display sizes feel composed rather than spread out. */
+
+.type-display-xl {
+  font-family: var(--font-display);
+  font-weight: 700;
+  font-size: clamp(4rem, 12vw, 12rem);
+  line-height: 0.92;
+  letter-spacing: -0.04em;
+  font-feature-settings: "ss01";
+}
+
+.type-display-lg {
+  font-family: var(--font-display);
+  font-weight: 600;
+  font-size: clamp(3rem, 8vw, 7rem);
+  line-height: 0.95;
+  letter-spacing: -0.035em;
+}
+
+.type-display-md {
+  font-family: var(--font-display);
+  font-weight: 600;
+  font-size: clamp(2rem, 5vw, 4rem);
+  line-height: 1.02;
+  letter-spacing: -0.02em;
+}
+
+.type-title {
+  font-family: var(--font-display);
+  font-weight: 600;
+  font-size: clamp(1.5rem, 2.5vw, 2rem);
+  line-height: 1.15;
+  letter-spacing: -0.012em;
+}
+
+.type-body-lg {
+  font-size: 1.1875rem; /* 19px — Apple product-page reading size */
+  line-height: 1.5;
+  color: var(--color-ink-2);
+  letter-spacing: -0.005em;
+}
+
+.type-body {
+  font-size: 1.0625rem; /* 17px — Apple's body */
+  line-height: 1.5;
+  color: var(--color-ink-2);
+}
+
+.type-caption {
+  font-family: var(--font-mono);
+  font-size: 0.8125rem;
+  line-height: 1.4;
+  letter-spacing: 0.02em;
+  color: var(--color-ink-3);
+  text-transform: uppercase;
+  font-feature-settings: "tnum";
+}
+
+.type-eyebrow {
+  font-family: var(--font-mono);
+  font-size: 0.75rem;
+  font-weight: 500;
+  letter-spacing: 0.18em;
+  color: var(--color-ink-3);
+  text-transform: uppercase;
+}
+
+/* ── Layout primitives ──────────────────────────────────────────────── */
+.container-page {
+  width: 100%;
+  max-width: 1440px;
+  margin-inline: auto;
+  padding-inline: 1.25rem;
+}
+
+@media (min-width: 768px) {
+  .container-page {
+    padding-inline: 2rem;
+  }
+}
+
+@media (min-width: 1280px) {
+  .container-page {
+    padding-inline: 3rem;
+  }
+}
+
+.container-narrow {
+  width: 100%;
+  max-width: 960px;
+  margin-inline: auto;
+  padding-inline: 1.25rem;
+}
+
+@media (min-width: 768px) {
+  .container-narrow {
+    padding-inline: 2rem;
+  }
+}
+
+/* ── Glass nav (Apple's macOS-style toolbar) ──────────────────────── */
+.glass-nav {
+  /* Both prefixed + standard. Safari needs the prefix; Chrome/Firefox
+     accept the standard. Background uses an exact 70% black so the
+     nav reads as "smoked glass" rather than "translucent overlay." */
+  background: rgba(0, 0, 0, 0.7);
+  -webkit-backdrop-filter: blur(20px) saturate(180%);
+  backdrop-filter: blur(20px) saturate(180%);
+}
+
+/* ── Surface card (elevated dark surface) ──────────────────────── */
+.surface {
+  background: var(--color-surface);
+  border: 1px solid var(--color-divider);
+  border-radius: 16px;
+}
+
+.surface-2 {
+  background: var(--color-surface-2);
+  border: 1px solid var(--color-divider);
+  border-radius: 18px;
+}
+
+/* ── Subtle accent ring (used on hover, focus, active) ──────────── */
+.accent-ring {
+  position: relative;
+}
+
+.accent-ring::before {
+  content: "";
+  position: absolute;
+  inset: -1px;
+  border-radius: inherit;
+  padding: 1px;
+  background: linear-gradient(
+    135deg,
+    var(--color-accent) 0%,
+    transparent 60%
+  );
+  -webkit-mask:
+    linear-gradient(#000 0 0) content-box,
+    linear-gradient(#000 0 0);
+  -webkit-mask-composite: xor;
+  mask-composite: exclude;
+  opacity: 0;
+  transition: opacity 0.3s cubic-bezier(0.32, 0.72, 0, 1);
+  pointer-events: none;
+}
+
+.accent-ring:hover::before {
+  opacity: 1;
+}
+
+/* ── Pulse dot (live status, hero opener) ──────────────────────── */
+.pulse-blue {
+  position: relative;
+  width: 6px;
+  height: 6px;
+  border-radius: 999px;
+  background: var(--color-accent);
+  box-shadow: 0 0 12px var(--color-accent-glow);
+}
+
+.pulse-blue::after {
+  content: "";
+  position: absolute;
+  inset: -2px;
+  border-radius: 999px;
+  background: var(--color-accent);
+  opacity: 0.4;
+  animation: pulse-ring 2.4s cubic-bezier(0.4, 0, 0.6, 1) infinite;
+}
+
+@keyframes pulse-ring {
+  0% {
+    transform: scale(0.85);
+    opacity: 0.5;
+  }
+  80%,
+  100% {
+    transform: scale(2.6);
+    opacity: 0;
+  }
+}
+
+/* ── GPU acceleration helper ──────────────────────────────────────── */
+.gpu {
+  transform: translate3d(0, 0, 0);
+  will-change: transform, opacity;
+  backface-visibility: hidden;
+}
+
+/* ── Reduced motion ─────────────────────────────────────────────── */
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+  html {
+    scroll-behavior: auto;
+  }
+}
