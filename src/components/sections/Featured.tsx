@@ -289,43 +289,22 @@ function SimplicityMockup() {
           />
         </svg>
 
-        {/* Center: wordmark + tagline */}
-        <div className="absolute inset-0 flex flex-col items-center justify-center text-center px-8 z-10">
+        {/* Quiet wordmark — small mono-caps eyebrow only.
+            The big headline + tagline that used to live here were
+            stripped because they collided with the foreground stage
+            text (the H2 in Stage 1 already says "Simplicity.", and
+            Stage 3's "See it for yourself." was overlapping the old
+            wordmark). Brand-art card is now purely visual; foreground
+            stages own all the messaging. */}
+        <div className="absolute inset-0 flex flex-col items-center justify-center px-8 z-10">
           <motion.p
-            initial={{ opacity: 0, y: 12 }}
-            whileInView={{ opacity: 1, y: 0 }}
+            initial={{ opacity: 0, y: 8 }}
+            whileInView={{ opacity: 0.5, y: 0 }}
             viewport={{ once: true }}
             transition={{ duration: 0.9, delay: 0.3, ease: APPLE_EASE }}
-            className="font-[family-name:var(--font-mono)] text-[0.7rem] tracking-[0.32em] uppercase text-[var(--color-accent)] mb-4"
+            className="font-[family-name:var(--font-mono)] text-[0.65rem] tracking-[0.4em] uppercase text-[var(--color-ink-3)]"
           >
-            · Simplicity
-          </motion.p>
-
-          <motion.h3
-            initial={{ opacity: 0, y: 16, filter: "blur(6px)" }}
-            whileInView={{ opacity: 1, y: 0, filter: "blur(0)" }}
-            viewport={{ once: true }}
-            transition={{ duration: 1.1, delay: 0.4, ease: APPLE_EASE }}
-            className="font-[family-name:var(--font-display)] font-semibold tracking-tight leading-none text-[clamp(2.5rem,7vw,5rem)] text-[var(--color-ink)]"
-            style={{
-              textShadow: "0 0 60px rgba(10, 132, 255, 0.4)",
-            }}
-          >
-            Money,{" "}
-            <span className="italic" style={{ color: "var(--color-accent)" }}>
-              simplified
-            </span>
-            .
-          </motion.h3>
-
-          <motion.p
-            initial={{ opacity: 0 }}
-            whileInView={{ opacity: 1 }}
-            viewport={{ once: true }}
-            transition={{ duration: 0.9, delay: 0.7 }}
-            className="text-sm md:text-base text-[var(--color-ink-2)] mt-4 max-w-[36ch]"
-          >
-            One clean page. Every account. Every dollar.
+            · Simplicity ·
           </motion.p>
         </div>
 

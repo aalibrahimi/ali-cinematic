@@ -7,6 +7,7 @@ import {
   useTransform,
 } from "motion/react";
 import Link from "next/link";
+import Image from "next/image";
 import { ArrowUpRight } from "lucide-react";
 import { useRef, type MouseEvent } from "react";
 import { WORK, type WorkItem } from "@/lib/work";
@@ -147,6 +148,38 @@ function WorkTile({ item, index }: { item: WorkItem; index: number }) {
           }}
           className="relative surface-2 overflow-hidden p-7 md:p-10 h-full min-h-[320px] md:min-h-[400px] gpu"
         >
+          {/* Project screenshot as background — only when item.image
+              is set. The image fills the tile under a dark gradient
+              overlay so foreground text stays legible. Subtle scale
+              on hover (driven by group-hover) gives a "ken-burns"
+              feel. Falls back to flat surface for projects without
+              an image (e.g., Sovereign). */}
+          {item.image && (
+            <div
+              aria-hidden
+              className="absolute inset-0 overflow-hidden pointer-events-none"
+            >
+              <Image
+                src={item.image}
+                alt=""
+                fill
+                sizes="(max-width: 768px) 100vw, 50vw"
+                quality={90}
+                className="object-cover object-top scale-105 group-hover:scale-110 transition-transform duration-700 ease-out"
+              />
+              {/* Dark gradient overlay — bottom is solid surface
+                  so text reads cleanly; top fades to mostly
+                  transparent to let the screenshot breathe. */}
+              <div
+                className="absolute inset-0"
+                style={{
+                  background:
+                    "linear-gradient(to bottom, rgba(0,0,0,0.55) 0%, rgba(0,0,0,0.7) 40%, rgba(10,10,10,0.95) 80%, rgba(10,10,10,0.98) 100%)",
+                }}
+              />
+            </div>
+          )}
+
           {/* Hover ring — Apple-blue glow that fades in on hover */}
           <div
             aria-hidden
@@ -157,43 +190,53 @@ function WorkTile({ item, index }: { item: WorkItem; index: number }) {
             }}
           />
 
-          {/* Top row: index + arrow */}
-          <div className="flex items-start justify-between mb-12 md:mb-16">
-            <p className="type-eyebrow text-[var(--color-accent)] flex items-center gap-2">
-              <span className="size-1 rounded-full bg-[var(--color-accent)]" />
-              {item.index} · {item.year}
-            </p>
-            <motion.span
-              animate={{ x: 0, y: 0 }}
-              whileHover={{ x: 4, y: -4 }}
-              transition={{ duration: 0.4, ease: [0.32, 0.72, 0, 1] }}
-              className="text-[var(--color-ink-3)] group-hover:text-[var(--color-accent)] transition-colors duration-300"
-            >
-              <ArrowUpRight size={28} strokeWidth={1.5} />
-            </motion.span>
-          </div>
-
-          {/* Project name */}
-          <h3 className="font-[family-name:var(--font-display)] text-4xl md:text-5xl font-semibold tracking-tight text-[var(--color-ink)] mb-2">
-            {item.name}
-          </h3>
-          <p className="text-[var(--color-ink-3)] mb-8">{item.kind}</p>
-
-          {/* Summary */}
-          <p className="type-body text-[var(--color-ink-2)] mb-10 max-w-[44ch]">
-            {item.summary}
-          </p>
-
-          {/* Tags row */}
-          <div className="flex flex-wrap gap-1.5 mt-auto">
-            {item.tags.slice(0, 4).map((t) => (
-              <span
-                key={t}
-                className="text-[0.7rem] font-mono px-2 py-0.5 rounded border border-[var(--color-divider)] text-[var(--color-ink-2)]"
+          {/* All foreground content sits on top of the image+overlay
+              via z-10. */}
+          <div className="relative z-10 flex flex-col h-full">
+            {/* Top row: index + arrow */}
+            <div className="flex items-start justify-between mb-12 md:mb-16">
+              <p className="type-eyebrow text-[var(--color-accent)] flex items-center gap-2">
+                <span className="size-1 rounded-full bg-[var(--color-accent)]" />
+                {item.index} · {item.year}
+              </p>
+              <motion.span
+                animate={{ x: 0, y: 0 }}
+                whileHover={{ x: 4, y: -4 }}
+                transition={{ duration: 0.4, ease: [0.32, 0.72, 0, 1] }}
+                className="text-[var(--color-ink-3)] group-hover:text-[var(--color-accent)] transition-colors duration-300"
               >
-                {t}
-              </span>
-            ))}
+                <ArrowUpRight size={28} strokeWidth={1.5} />
+              </motion.span>
+            </div>
+
+            {/* Spacer pushes the textual content to the bottom of
+                the tile when an image is set, so the screenshot has
+                room to breathe up top. Falls back to natural flow
+                for image-less tiles. */}
+            {item.image && <div className="flex-1" />}
+
+            {/* Project name */}
+            <h3 className="font-[family-name:var(--font-display)] text-4xl md:text-5xl font-semibold tracking-tight text-[var(--color-ink)] mb-2">
+              {item.name}
+            </h3>
+            <p className="text-[var(--color-ink-3)] mb-8">{item.kind}</p>
+
+            {/* Summary */}
+            <p className="type-body text-[var(--color-ink-2)] mb-10 max-w-[44ch]">
+              {item.summary}
+            </p>
+
+            {/* Tags row */}
+            <div className="flex flex-wrap gap-1.5 mt-auto">
+              {item.tags.slice(0, 4).map((t) => (
+                <span
+                  key={t}
+                  className="text-[0.7rem] font-mono px-2 py-0.5 rounded border border-[var(--color-divider)] text-[var(--color-ink-2)]"
+                >
+                  {t}
+                </span>
+              ))}
+            </div>
           </div>
         </motion.article>
       </Link>
