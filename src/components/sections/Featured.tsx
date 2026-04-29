@@ -27,7 +27,7 @@ const APPLE_EASE = [0.32, 0.72, 0, 1] as const;
  */
 
 const STATS = [
-  { value: "120k+", label: "Lines shipped" },
+  { value: "560k+", label: "Lines shipped" },
   { value: "240+", label: "Components" },
   { value: "3.5s", label: "Cold load" },
   { value: "0", label: "Downtime" },
@@ -392,8 +392,20 @@ function FeatureGlyph({
       >
         {type === "ring" && (
           <>
-            <circle cx="16" cy="16" r="14" stroke="currentColor" strokeWidth="1" />
-            <circle cx="16" cy="16" r="6" stroke="currentColor" strokeWidth="1" />
+            <circle
+              cx="16"
+              cy="16"
+              r="14"
+              stroke="currentColor"
+              strokeWidth="1"
+            />
+            <circle
+              cx="16"
+              cy="16"
+              r="6"
+              stroke="currentColor"
+              strokeWidth="1"
+            />
           </>
         )}
         {type === "bars" && (
@@ -401,13 +413,31 @@ function FeatureGlyph({
             <rect x="4" y="20" width="4" height="8" fill="currentColor" />
             <rect x="11" y="14" width="4" height="14" fill="currentColor" />
             <rect x="18" y="8" width="4" height="20" fill="currentColor" />
-            <rect x="25" y="4" width="4" height="24" fill="var(--color-accent)" />
+            <rect
+              x="25"
+              y="4"
+              width="4"
+              height="24"
+              fill="var(--color-accent)"
+            />
           </>
         )}
         {type === "target" && (
           <>
-            <circle cx="16" cy="16" r="14" stroke="currentColor" strokeWidth="1" />
-            <circle cx="16" cy="16" r="9" stroke="currentColor" strokeWidth="1" />
+            <circle
+              cx="16"
+              cy="16"
+              r="14"
+              stroke="currentColor"
+              strokeWidth="1"
+            />
+            <circle
+              cx="16"
+              cy="16"
+              r="9"
+              stroke="currentColor"
+              strokeWidth="1"
+            />
             <circle cx="16" cy="16" r="4" fill="var(--color-accent)" />
           </>
         )}
@@ -426,7 +456,7 @@ function FeatureGlyph({
                       : "currentColor"
                   }
                 />
-              ))
+              )),
             )}
           </>
         )}

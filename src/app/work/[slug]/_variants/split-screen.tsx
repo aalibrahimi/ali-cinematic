@@ -198,13 +198,7 @@ function CaseHero({ item }: { item: WorkItem }) {
    the cell skips the counter and renders the string as-is.
    ───────────────────────────────────────────────────────────────── */
 
-function StatsGrid({
-  stats,
-  accent,
-}: {
-  stats: WorkStat[];
-  accent: string;
-}) {
+function StatsGrid({ stats, accent }: { stats: WorkStat[]; accent: string }) {
   return (
     <section className="border-t border-[var(--color-divider)]">
       <div className="container-page">
@@ -227,7 +221,7 @@ function StatCell({
   index: number;
   accent: string;
 }) {
-  // Pull a number out of the value if there is one — e.g. "120k+"
+  // Pull a number out of the value if there is one — e.g. "560k+"
   // gives 120 with suffix "k+". Non-numeric values like "Solo" or
   // "Tauri" skip the counter.
   const numericMatch = stat.value.match(/^([\d.,]+)([+%kK]*)$/);
@@ -241,7 +235,7 @@ function StatCell({
   const inView = useInView(ref, { once: true, margin: "-25%" });
   const count = useMotionValue(0);
   const display = useTransform(count, (latest) =>
-    Math.floor(latest).toLocaleString()
+    Math.floor(latest).toLocaleString(),
   );
 
   useEffect(() => {
@@ -327,7 +321,7 @@ function SplitBody({ item }: { item: WorkItem }) {
         {
           rootMargin: "-40% 0px -50% 0px",
           threshold: 0,
-        }
+        },
       );
       observer.observe(el);
       observers.push(observer);
@@ -373,9 +367,7 @@ function SplitBody({ item }: { item: WorkItem }) {
               <p className="text-sm text-[var(--color-ink-2)] mb-2">
                 {item.role}
               </p>
-              <p className="text-xs text-[var(--color-ink-3)]">
-                {item.year}
-              </p>
+              <p className="text-xs text-[var(--color-ink-3)]">{item.year}</p>
             </div>
 
             {/* Chapter list */}
@@ -532,10 +524,7 @@ function SplitBody({ item }: { item: WorkItem }) {
             }}
             className="space-y-8 pt-8 border-t border-[var(--color-divider)] scroll-mt-24"
           >
-            <p
-              className="type-eyebrow"
-              style={{ color: item.accent }}
-            >
+            <p className="type-eyebrow" style={{ color: item.accent }}>
               / Stack
             </p>
             <div className="flex flex-wrap items-center gap-2">

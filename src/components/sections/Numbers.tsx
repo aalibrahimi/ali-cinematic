@@ -37,7 +37,7 @@ const STATS: Stat[] = [
     description: "Simplicity, CodeWithAli, Takeover, Sovereign",
   },
   {
-    value: 120,
+    value: 560,
     suffix: "k+",
     label: "Lines shipped",
     description: "Frontend, backend, agents — all written, all reviewed",

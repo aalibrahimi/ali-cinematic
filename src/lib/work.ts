@@ -71,7 +71,7 @@ export const WORK: WorkItem[] = [
     interlude: "End-to-end. One person. Production grade.",
     stats: [
       {
-        value: "120k+",
+        value: "560k+",
         label: "Lines shipped",
         hint: "frontend + backend + agents",
       },
