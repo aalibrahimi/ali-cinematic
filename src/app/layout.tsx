@@ -2,6 +2,7 @@ import type { Metadata, Viewport } from "next";
 import { Geist, Geist_Mono, Instrument_Serif } from "next/font/google";
 import { LenisProvider } from "@/components/ui/LenisProvider";
 import { ServiceWorkerRegister } from "@/components/ui/ServiceWorkerRegister";
+import { CommandPalette } from "@/components/ui/CommandPalette";
 import { Nav } from "@/components/Nav";
 import { Footer } from "@/components/Footer";
 import "./globals.css";
@@ -104,6 +105,7 @@ export default function RootLayout({
           {children}
           <Footer />
         </LenisProvider>
+        <CommandPalette />
         <ServiceWorkerRegister />
       </body>
     </html>

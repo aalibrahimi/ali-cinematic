@@ -62,13 +62,23 @@ export function Nav() {
           <NavLink href="/about">About</NavLink>
         </div>
 
-        {/* Contact CTA pill */}
-        <Link
-          href="/#contact"
-          className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-[var(--color-accent)] text-[var(--color-ink)] text-sm font-medium hover:bg-[var(--color-accent-hover)] transition-colors duration-300"
-        >
-          Get in touch
-        </Link>
+        {/* Right group: ⌘K hint + Contact CTA */}
+        <div className="flex items-center gap-3">
+          {/* ⌘K hint — quiet kbd badge that signals the palette
+              exists. Apple-style discoverability cue. */}
+          <kbd
+            aria-hidden
+            className="hidden md:inline-flex items-center gap-1 px-2 py-1 rounded-md border border-[var(--color-divider)] text-[0.7rem] font-mono text-[var(--color-ink-3)]"
+          >
+            ⌘K
+          </kbd>
+          <Link
+            href="/#contact"
+            className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-[var(--color-accent)] text-[var(--color-ink)] text-sm font-medium hover:bg-[var(--color-accent-hover)] transition-colors duration-300"
+          >
+            Get in touch
+          </Link>
+        </div>
       </div>
     </motion.nav>
   );
