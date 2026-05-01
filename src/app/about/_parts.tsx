@@ -3,6 +3,7 @@
 import Link from "next/link";
 import { motion } from "motion/react";
 import { ArrowLeft, ArrowUpRight } from "lucide-react";
+import Image from "next/image";
 
 const APPLE_EASE = [0.32, 0.72, 0, 1] as const;
 
@@ -55,7 +56,17 @@ const BELIEFS = [
 export function AboutHero() {
   return (
     <section className="pt-32 md:pt-44 pb-16 md:pb-24">
-      <div className="container-page">
+      <div className="relative container-page">
+        {/* Profile Pic */}
+        <div className="absolute right-0 w-100 h-auto rounded-md overflow-clip">
+          <Image
+          src="/linkedin_profile.jpeg"
+          alt="Profile Photo"
+          width={1000}
+          height={1000}
+          draggable={false}
+        />
+        </div>
         <motion.div
           initial={{ opacity: 0, x: -8 }}
           animate={{ opacity: 1, x: 0 }}
