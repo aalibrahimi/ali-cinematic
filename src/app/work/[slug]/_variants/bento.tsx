@@ -148,7 +148,7 @@ export function BentoVariant({ item }: Props) {
 
         {/* Highlights from block 1 — varied cell sizes */}
         {item.blocks[0]?.highlights?.map((h, hi) => {
-          const sizes: Array<"4" | "6" | "8"> = ["6", "6", "4", "8", "12"];
+          const sizes: Array<"4" | "6" | "8" | "12"> = ["6", "6", "4", "8", "12"];
           const size = sizes[hi % sizes.length] ?? "6";
           return (
             <Cell key={h} size={size} reveal={0.5 + hi * 0.04} surface>

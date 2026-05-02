@@ -58,7 +58,7 @@ type Command = {
   label: string;
   hint?: string;
   /** Icon component from lucide-react */
-  icon: React.ComponentType<{ size?: number; strokeWidth?: number }>;
+  icon: React.ComponentType<{ size?: number; strokeWidth?: number; className?: string; }>;
   /** What runs when the command is selected. */
   action: (router: ReturnType<typeof useRouter>) => void;
   /** Group label for visual sectioning. */

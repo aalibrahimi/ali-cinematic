@@ -13,7 +13,7 @@ import { WORK } from "@/lib/work";
  * brand mark, same proportions) so all share cards feel like a set.
  */
 
-export const runtime = "edge";
+// export const runtime = "edge";
 export const alt = "Case study";
 export const size = { width: 1200, height: 630 };
 export const contentType = "image/png";
@@ -25,10 +25,12 @@ export async function generateImageMetadata({
 }) {
   const { slug } = await params;
   const item = WORK.find((w) => w.slug === slug);
-  return [{ alt: item?.name ?? "Case study", size, contentType, id: slug }];
+  // *This is for when building the project and no Slug is provided, NextJs needs an ID for each Metadata
+  const fallBackID = Date.now().toString().slice(0, 10);
+  return [{ alt: item?.name ?? "Case study", size, contentType, id: slug ?? fallBackID }];
 }
 
-export default async function OG({
+export default async function Image({
   params,
 }: {
   params: Promise<{ slug: string }>;

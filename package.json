@@ -1,6 +1,6 @@
 {
-  "name": "ali-flagship",
-  "version": "0.1.0",
+  "name": "ali-cinematic-portfolio",
+  "version": "1.0.0",
   "private": true,
   "scripts": {
     "dev": "next dev --turbopack",
@@ -18,12 +18,12 @@
     "lucide-react": "^0.460.0"
   },
   "devDependencies": {
-    "@types/node": "^22.10.0",
+    "@types/node": "^25.6.0",
     "@types/react": "^19.0.0",
     "@types/react-dom": "^19.0.0",
     "tailwindcss": "^4.2.4",
     "@tailwindcss/postcss": "^4.2.4",
-    "postcss": "^8.5.0",
+    "postcss": "^8.5.13",
     "typescript": "^6.0.3"
   }
 }
