@@ -1,4 +1,4 @@
-# Ali Alibrahimi — Flagship Portfolio
+# Ali Alibrahimi — Cinematic Portfolio
 
 Apple-grade portfolio. Cinematic dark, Geist typography, scroll-driven choreography. Tuned for macOS Safari.
 
